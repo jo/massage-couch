@@ -1,0 +1,34 @@
+{
+  "name": "massage-couch",
+  "version": "0.0.0",
+  "description": "Massage CouchDB documents with an os daemon worker.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jo/couch-massage.git"
+  },
+  "keywords": [
+    "couchdb",
+    "couchdb-worker",
+    "os_daemon"
+  ],
+  "author": "Johannes J. Schmidt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jo/couch-massage/issues"
+  },
+  "homepage": "https://github.com/jo/couch-massage",
+  "dependencies": {
+    "async": "^0.8.0",
+    "couch-daemon": "^1.2.1",
+    "nano": "^5.8.0",
+    "event-stream": "^3.1.5"
+  },
+  "devDependencies": {
+    "tap": "^0.4.9",
+    "jshint": "^2.5.0"
+  }
+}
