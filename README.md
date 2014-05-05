@@ -45,7 +45,7 @@ property.
   "_id": "_design/my-massage-couch-config",
   "_rev": "1-ef6f87ae96babf982648268a7e5c5112",
   "massage-couch": {
-    "my-masseur": "function(doc) { // do it! }"
+    "my-masseur": "function(doc) { /* do it! */ }"
   }
 }
 ```
