@@ -1,4 +1,6 @@
 # massage-couch
+[![Build Status](https://travis-ci.org/jo/massage-couch.svg?branch=master)](https://travis-ci.org/jo/massage-couch)
+
 Take a break and let me massage your CouchDB documents.  
 I am an os_daemon under the control of your couch.
 
