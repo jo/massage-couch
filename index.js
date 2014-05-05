@@ -17,7 +17,7 @@ module.exports = function(config, info, error) {
   config.address = config.address || 'localhost';
   config.port = config.port || 5984;
   config.streams = config.streams && parseInt(config.streams, 10) || 50;
-  config.changes_feed_timeout = config.changes_feed_timeout && parseInt(config.changes_feed_timeout, 10) || 5000;
+  config.changes_feed_timeout = config.changes_feed_timeout && parseInt(config.changes_feed_timeout, 10) || 60 * 1000;
 
   // TODO: validate config
 
