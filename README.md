@@ -12,7 +12,7 @@ Add massage-couch to `os_daemons` config section:
 
 ```ini
 [os_daemons]
-massage-couch = massage-couch
+massage-couch = massage-couch-daemon
 ```
 
 Now CouchDB takes care of the massage-couch process.
@@ -29,10 +29,6 @@ password = secure
 ; streams parameter equal to or larger than the number of databases in the server
 ; usually.
 streams = 20
-; Timeout for a convert process in ms. Default is 60000 (1min). This should be plenty
-; for the usual image resizes, increase it if you deal with really large images and complex
-; imagemagick processing.
-convert_process_timeout = 60000
 ; Timeout for changes feed in ms. Default is 60000. See the 'streams' parameter above
 ; if you have a really large number of databases in your server and cannot afford to
 ; have a changes feed open to each of them.
