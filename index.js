@@ -62,6 +62,9 @@ module.exports = function(config, logger) {
   };
 
 
+  logger.info('Using options ' + JSON.stringify(config).replace(/"password":".*?"/, '"password":"***"'));
+
+
   function getConfig(task, next) {
     logger.info('Retrieve configuration for ' + couchUrl + '/' + task.dbname);
     

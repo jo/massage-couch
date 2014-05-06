@@ -34,7 +34,7 @@ streams = 20
 ; Timeout for changes feed in ms. Default is 60000. See the 'streams' parameter above
 ; if you have a really large number of databases in your server and cannot afford to
 ; have a changes feed open to each of them.
-changes_feed_timeout = 60000
+timeout = 60000
 ```
 
 ## Massage Definition
@@ -59,10 +59,11 @@ massage-couch-client
 ```
 
 ### Options
-```
-massage-couch-client --version
-massage-couch 0.1.1
-```
+* `--version`: Return massage-couch npm version
+* `--username`: Username used to access the database
+* `--password`: Password
+* `--streams`: Number of simultaneous changes feeds in parallel
+* `--timeout`: Timeout for changes feed in ms
 
 ## Contributing
 Test your code with `npm test` and lint the code via `npm run jshint`.

@@ -24,8 +24,6 @@ daemon.get({
     return process.exit(0);
   }
 
-  daemon.info('using config ' + JSON.stringify(config).replace(/"password":".*?"/, '"password":"***"'));
-
   masseur(config, {
     info: daemon.info,
     error: daemon.error,

@@ -5,10 +5,26 @@
 
 var masseur = require('..');
 
-if (process.argv.indexOf('-v') > -1 || process.argv.indexOf('--version') > -1) {
+var options = require('minimist')(process.argv.slice(2), {
+  booleans: ['version']
+});
+
+
+if (options.version) {
   var pkg = require('../package.json');
   console.log(pkg.name, pkg.version);
   process.exit(0);
 }
 
-masseur();
+
+if (options.username) {
+  options.auth = {
+    username: options.username,
+    password: options.password
+  };
+  delete options.username;
+  delete options.password;
+}
+delete options._;
+
+masseur(options);
