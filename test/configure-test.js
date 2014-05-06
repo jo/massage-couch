@@ -8,6 +8,9 @@ var dbname = 'massage-couch-test';
 var nano = require('nano')(couch);
 var db = nano.use(dbname);
 
+var noop = function() {};
+var logger = { info: noop, error: noop, debug: noop };
+
 function testWithDb(name, tests) {
   test(name, function(t) {
     nano.db.create(dbname, function(err, resp) {
@@ -61,7 +64,7 @@ testWithDb('simple config', function(t, done) {
       es.pipeline(
         es.readArray(changes.results),
 
-        configure(config)
+        configure(config, logger)
       )
       .on('end', function() {
         t.ok(config['_design/myconfig/mymasseur'], 'should have mymasseur');

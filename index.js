@@ -33,7 +33,7 @@ module.exports = function(config, logger) {
   // defaults
   config.address = config.address || 'localhost';
   config.port = config.port || 5984;
-  config.streams = config.streams && parseInt(config.streams, 10) || 50;
+  config.streams = config.streams && parseInt(config.streams, 10) || 20;
   config.timeout = config.timeout && parseInt(config.timeout, 10) || 60 * 1000;
 
   // validate config
@@ -59,7 +59,9 @@ module.exports = function(config, logger) {
   };
 
 
-  function listen(dbname, next) {
+  function listen(task, next) {
+    var dbname = task.dbname;
+
     logger.info('Listening on ' + couchUrl + '/' + dbname);
 
     changes(couch.use(dbname), options, logger)
@@ -69,30 +71,25 @@ module.exports = function(config, logger) {
           logger.info(data.response);
         }
       })
-      .on('end', next);
+      .on('end', function() {
+        // add to the end of queue
+        q.push(task);
+        next();
+      });
   }
 
+  
+  var q = async.queue(listen, config.streams);
 
-  // main loop ;)
-  function run(err) {
+  couch.db.list(function(err, dbs) {
     if (err) {
-      logger.error(err);
-      process.exit(0);
+      logger.error('Can not get _all_dbs: ' + err.description);
+
+      return process.exit(0);
     }
 
-
-    // get list of all databases
-    // TODO: listen to db changes
-    couch.db.list(function(err, dbs) {
-      if (err) {
-        logger.error('Can not get _all_dbs: ' + err.description);
-
-        return process.exit(0);
-      }
-
-      async.eachLimit(dbs, config.streams, listen, run);
+    dbs.forEach(function(db) {
+      q.push({ dbname: db });
     });
-  }
-
-  run();
+  });
 };
