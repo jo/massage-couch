@@ -4,11 +4,14 @@
 
 var pkg = require('./package.json');
 var changes = require('./lib/changes');
+var configure = require('./lib/configure');
 
 var assert = require('assert');
 var url = require('url');
 var async = require('async');
 var nano = require('nano');
+var es = require('event-stream');
+var JSONStream = require('JSONStream');
 
 
 // used in client and test
@@ -59,11 +62,41 @@ module.exports = function(config, logger) {
   };
 
 
-  function listen(task, next) {
-    logger.info('Listening on ' + couchUrl + '/' + dbname);
+  function getConfig(task, next) {
+    logger.info('Retrieve configuration for ' + couchUrl + '/' + task.dbname);
+    
+    task.db.list({
+      startkey: '_design',
+      endkey: '_design0',
+      include_docs: true
+    }, function(err, resp) {
+      if (err) {
+        logger.error('Failed to retrieve configuration for ' + couchUrl + '/' + task.dbname);
+        return next();
+      }
 
-    changes(db, options, logger)
-      .on('error', logger.error)
+      es.pipeline(
+        es.readArray(resp.rows),
+        configure(task.config, logger)
+      ).on('end', function() {
+        listen(task, next);
+      })
+    });
+  }
+
+  function listen(task, next) {
+    if (!task.config) {
+      task.config = {};
+      return getConfig(task, next);
+    }
+
+    logger.info('Listening on ' + couchUrl + '/' + task.dbname);
+
+    changes(task.db, options, config, logger)
+      .on('error', function(d) {
+        logger.error(d);
+        next();
+      })
       .on('data', function(data) {
         if (data.response) {
           logger.info(data.response);
@@ -76,8 +109,14 @@ module.exports = function(config, logger) {
       });
   }
 
-  
   var q = async.queue(listen, config.streams);
+
+  function add(dbname) {
+    q.push({
+      dbname: dbname,
+      db: couch.use(dbname)
+    });
+  }
 
   couch.db.list(function(err, dbs) {
     if (err) {
@@ -86,12 +125,8 @@ module.exports = function(config, logger) {
       return process.exit(0);
     }
 
-    dbs.forEach(function(dbname) {
-      q.push({
-        dbname: dbname,
-        db: couch.use(dbname),
-        config: {}
-      });
-    });
+    dbs.forEach(add);
   });
+
+  // TODO: listen to _db_updates
 };
