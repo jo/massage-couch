@@ -29,14 +29,10 @@ module.exports = function(config, info, error) {
     auth: config.auth && config.auth.username && config.auth.password ? [ config.auth.username, config.auth.password ].join(':') : null
   });
 
-  info('db: ' + JSON.stringify(couch));
-
   var options = {
     feed: 'continuous',
     changes_feed_timeout: config.changes_feed_timeout
   };
-
-  info('options: ' + JSON.stringify(options));
 
   function listen(dbname, next) {
     info('Listening on ' + couch + '/' + dbname);
