@@ -76,7 +76,7 @@ massage-couch-client
 * `--timeout`: Timeout for changes feed in ms
 
 ## Contributing
-Test your code with `npm test` and lint the code via `npm run jshint`.
+Test your code with `npm test`.
 
 You can set a different CouchDB url (and authentication credentials) via `COUCH` environment variable:
 ```shell
