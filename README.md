@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/jo/massage-couch.svg?branch=master)](https://travis-ci.org/jo/massage-couch)
 
 Take a break and let me massage your CouchDB documents.  
-I am an os_daemon under the control of your couch.
+I am a streaming [os_daemon](http://docs.couchdb.org/en/latest/config/externals.html#os_daemons) under the control of your couch.  
 
 ## Installation
 ```shell
@@ -57,10 +57,10 @@ Each masseur will be run, but there is no special order in which they are
 executed.
 
 A masseur function receives three arguments:
-* `doc`: the document received from the changes feed (the changes feed runs with `include_docs`)
+* `doc`: the document received from the changes feed (the changes feed runs with `include_docs = true`)
 * `db`: a [nano](https://github.com/dscape/nano) adapter, pointing to the db where the doc comes from
 * `done`: MUST be called after completion
-  (the masseur function is run through [event-stream map](https://github.com/dominictarr/event-stream#map-asyncfunction)
+  (the masseur function is run through [event-stream map](https://github.com/dominictarr/event-stream#map-asyncfunction))
 
 ## Client
 Instead of installing massage-couch as daemon it can be run standalone:
