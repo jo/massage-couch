@@ -95,7 +95,7 @@ module.exports = function(config, logger) {
 
     logger.info('Listening on ' + couchUrl + '/' + task.dbname);
 
-    changes(task.db, options, config, logger)
+    changes(task.db, options, task.config, logger)
       .on('error', function(d) {
         logger.error(d);
         next();
