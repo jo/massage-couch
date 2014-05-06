@@ -1,6 +1,6 @@
 {
   "name": "massage-couch",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Massage CouchDB documents with an os daemon worker.",
   "main": "index.js",
   "bin": {
