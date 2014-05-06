@@ -52,6 +52,18 @@ property.
 }
 ```
 
+## Client
+Instead of installing massage-couch as daemon it can be run standalone:
+```
+massage-couch-client
+```
+
+### Options
+```
+massage-couch-client --version
+massage-couch 0.1.1
+```
+
 ## Contributing
 Test your code with `npm test` and lint the code via `npm run jshint`.
 

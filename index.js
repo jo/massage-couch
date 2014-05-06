@@ -2,16 +2,27 @@
  * (c) 2014 Johannes J. Schmidt, null2 GmbH, Berlin 
  */
 
+var pkg = require('./package.json');
 var stream = require('./lib/listen');
 
 var url = require('url');
 var async = require('async');
 var nano = require('nano');
 
-module.exports = function(config, info, error) {
+module.exports = function(config, logger) {
   config = config || {};
-  info = info || console.log;
-  error = error || console.error;
+  logger = logger || {
+    info: function(msg) {
+      console.info('[' + new Date + '] [info] Daemon "' + pkg.name + '" :: ' + msg);
+    },
+    error: function(msg) {
+      console.error('[' + new Date, '] [error] Daemon "' + pkg.name + '" :: ' + msg);
+    },
+    debug: function(msg) {
+      console.log('[' + new Date, '] [debug] Daemon "' + pkg.name + '" :: ' + msg);
+    },
+  };
+
 
   // defaults
   config.address = config.address || 'localhost';
@@ -35,16 +46,16 @@ module.exports = function(config, info, error) {
   };
 
   function listen(dbname, next) {
-    info('Listening on ' + couch + '/' + dbname);
+    logger.info('Listening on ' + couch + '/' + dbname);
 
     var db = nano(couch).use(dbname);
 
-    var changes = stream(db, options, info, error);
+    var changes = stream(db, options, logger);
 
-    changes.on('error', error);
+    changes.on('error', logger.error);
     changes.on('data', function(data) {
       if (data.response) {
-        info(data.response);
+        logger.info(data.response);
       }
     });
 
@@ -55,7 +66,7 @@ module.exports = function(config, info, error) {
   // main loop ;)
   function run(err) {
     if (err) {
-      error(err);
+      logger.error(err);
       process.exit(0);
     }
 
@@ -64,7 +75,7 @@ module.exports = function(config, info, error) {
     // TODO: listen to db changes
     nano(couch).db.list(function(err, dbs) {
       if (err) {
-        error('Can not get _all_dbs: ' + err.description);
+        logger.error('Can not get _all_dbs: ' + err.description);
 
         return process.exit(0);
       }
