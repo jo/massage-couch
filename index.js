@@ -20,10 +20,10 @@ var defaultLogger = {
     console.info('[' + new Date + '] [info] Daemon "' + pkg.name + '" :: ' + msg);
   },
   error: function(msg) {
-    console.error('[' + new Date, '] [error] Daemon "' + pkg.name + '" :: ' + msg);
+    console.error('[' + new Date + '] [error] Daemon "' + pkg.name + '" :: ' + msg);
   },
   debug: function(msg) {
-    console.log('[' + new Date, '] [debug] Daemon "' + pkg.name + '" :: ' + msg);
+    console.log('[' + new Date + '] [debug] Daemon "' + pkg.name + '" :: ' + msg);
   },
 };
 
@@ -74,7 +74,7 @@ module.exports = function(config, logger) {
       include_docs: true
     }, function(err, resp) {
       if (err) {
-        logger.error('Failed to retrieve configuration for ' + couchUrl + '/' + task.dbname);
+        logger.error('Failed to retrieve configuration for ' + couchUrl + '/' + task.dbname + ' (' + err.status_code + '): ' + err.message);
         return next();
       }
 
