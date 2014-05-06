@@ -66,7 +66,9 @@ module.exports = function(config, logger) {
 
 
   function getConfig(task, next) {
-    logger.info('Retrieve configuration for ' + couchUrl + '/' + task.dbname);
+    var name = couchUrl.replace(/:\/\/([^:]+):[^@]+@/, '://$1:***@') + '/' + task.dbname;
+
+    logger.info('Listening on ' + name);
     
     task.db.list({
       startkey: '_design',
@@ -74,7 +76,7 @@ module.exports = function(config, logger) {
       include_docs: true
     }, function(err, resp) {
       if (err) {
-        logger.error('Failed to retrieve configuration for ' + couchUrl + '/' + task.dbname + ' (' + err.status_code + '): ' + err.message);
+        logger.error('Failed to retrieve configuration for ' + name + ' (' + err.status_code + '): ' + err.message);
         return next();
       }
 
@@ -92,8 +94,6 @@ module.exports = function(config, logger) {
       task.config = {};
       return getConfig(task, next);
     }
-
-    logger.info('Listening on ' + couchUrl + '/' + task.dbname);
 
     changes(task.db, options, task.config, logger)
       .on('error', function(d) {
