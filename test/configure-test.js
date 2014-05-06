@@ -61,7 +61,7 @@ testWithDb('simple config', function(t, done) {
       es.pipeline(
         es.readArray(changes.results),
 
-        configure(config, console.log, console.info)
+        configure(config)
       )
       .on('end', function() {
         t.ok(config['_design/myconfig/mymasseur'], 'should have mymasseur');
