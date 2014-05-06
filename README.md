@@ -52,6 +52,16 @@ property.
 }
 ```
 
+As you see you can define different masseurs under a `massage-couch` property.
+Each masseur will be run, but there is no special order in which they are
+executed.
+
+A masseur function receives three arguments:
+* `doc`: the document received from the changes feed (the changes feed runs with `include_docs`)
+* `db`: a [nano](https://github.com/dscape/nano) adapter, pointing to the db where the doc comes from
+* `done`: MUST be called after completion
+  (the masseur function is run through [event-stream map]https://github.com/dominictarr/event-stream#map-asyncfunction)
+
 ## Client
 Instead of installing massage-couch as daemon it can be run standalone:
 ```
