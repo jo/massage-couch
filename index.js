@@ -60,11 +60,9 @@ module.exports = function(config, logger) {
 
 
   function listen(task, next) {
-    var dbname = task.dbname;
-
     logger.info('Listening on ' + couchUrl + '/' + dbname);
 
-    changes(couch.use(dbname), options, logger)
+    changes(db, options, logger)
       .on('error', logger.error)
       .on('data', function(data) {
         if (data.response) {
@@ -88,8 +86,12 @@ module.exports = function(config, logger) {
       return process.exit(0);
     }
 
-    dbs.forEach(function(db) {
-      q.push({ dbname: db });
+    dbs.forEach(function(dbname) {
+      q.push({
+        dbname: dbname,
+        db: couch.use(dbname),
+        config: {}
+      });
     });
   });
 };
