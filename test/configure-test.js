@@ -2,7 +2,7 @@ var test = require('tap').test;
 var es = require('event-stream');
 var configure = require('../lib/configure');
 
-var couch = 'http://localhost:5984';
+var couch = process.env.COUCH || 'http://localhost:5984';
 var dbname = 'massage-couch-test';
 
 var nano = require('nano')(couch);
