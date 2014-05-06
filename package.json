@@ -1,6 +1,6 @@
 {
   "name": "massage-couch",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Massage CouchDB documents with an os daemon worker.",
   "main": "index.js",
   "bin": {
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/jo/couch-massage",
   "dependencies": {
     "async": "^0.8.0",
-    "couch-daemon": "^1.2.1",
+    "couch-daemon-bridge": "^1.2.2",
     "nano": "^5.8.0",
     "event-stream": "^3.1.5",
     "JSONStream": "^0.7.3",
