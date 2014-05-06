@@ -3,7 +3,7 @@
  */
 
 var pkg = require('./package.json');
-var stream = require('./lib/listen');
+var changes = require('./lib/changes');
 
 var assert = require('assert');
 var url = require('url');
@@ -62,7 +62,7 @@ module.exports = function(config, logger) {
   function listen(dbname, next) {
     logger.info('Listening on ' + couchUrl + '/' + dbname);
 
-    stream(couch.use(dbname), options, logger)
+    changes(couch.use(dbname), options, logger)
       .on('error', logger.error)
       .on('data', function(data) {
         if (data.response) {
