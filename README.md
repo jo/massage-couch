@@ -9,12 +9,25 @@ I am a streaming [os_daemon](http://docs.couchdb.org/en/latest/config/externals.
 npm install massage-couch -g
 ```
 
+## Commandline Client
+You can run massage-couch from the commandline:
+```shell
+massage-couch
+```
+
+The options explained above can be given as commandline parameters (prefixed with
+`--`) or environment variables (UPPERCASED).
+
+```shell
+massage-couch --username bernd --password secure --whitelist projects
+```
+
 ## Daemon Configuration
-Add massage-couch to `os_daemons` config section:
+Add massage-couch to the `os_daemons` config section (eg. in local.ini):
 
 ```ini
 [os_daemons]
-massage-couch = massage-couch-daemon
+massage-couch = massage-couch
 ```
 
 Now CouchDB takes care of the massage-couch process.
@@ -24,17 +37,10 @@ Now CouchDB takes care of the massage-couch process.
 ; Optional username and password, used by the workers to access the database
 username = mein-user
 password = secure
-; Number of simultaneous changes feeds in parallel. Default is 20.
-; Increase it to at least  the number of your databases, to get best performance.
-; If streams is less than the number of databases, all databases will still be queried
-; but in intervals of the changes_feed_timeout (see below). You should keep the 
-; streams parameter equal to or larger than the number of databases in the server
-; usually.
-streams = 20
-; Timeout for changes feed in ms. Default is 60000. See the 'streams' parameter above
-; if you have a really large number of databases in your server and cannot afford to
-; have a changes feed open to each of them.
-timeout = 60000
+; Only documents in the databases above are processed (seperate with comma)
+; whitelist = mydb,otherdb
+; Ignore the following databases (again comma seperated list)
+blacklist = _users,_replicator
 ```
 
 ## Massage Definition
@@ -61,19 +67,6 @@ A masseur function receives three arguments:
 * `db`: a [nano](https://github.com/dscape/nano) adapter, pointing to the db where the doc comes from
 * `done`: MUST be called after completion
   (the masseur function is run through [event-stream map](https://github.com/dominictarr/event-stream#map-asyncfunction))
-
-## Client
-Instead of installing massage-couch as daemon it can be run standalone:
-```
-massage-couch-client
-```
-
-### Options
-* `--version`: Return massage-couch npm version
-* `--username`: Username used to access the database
-* `--password`: Password
-* `--streams`: Number of simultaneous changes feeds in parallel
-* `--timeout`: Timeout for changes feed in ms
 
 ## Contributing
 Test your code with `npm test`.

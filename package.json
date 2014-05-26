@@ -1,14 +1,12 @@
 {
   "name": "massage-couch",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "description": "Massage CouchDB documents with an os daemon worker.",
   "main": "index.js",
-  "bin": {
-    "massage-couch-daemon": "bin/daemon.js",
-    "massage-couch-client": "bin/client.js"
-  },
+  "preferGlobal": true,
+  "bin": "index.js",
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -26,14 +24,9 @@
   },
   "homepage": "https://github.com/jo/couch-massage",
   "dependencies": {
-    "async": "^0.8.0",
-    "couch-daemon-bridge": "^1.2.2",
+    "couch-daemon": "^1.2.10",
+    "highland": "^1.25.1",
     "nano": "^5.8.0",
-    "event-stream": "^3.1.5",
-    "JSONStream": "^0.7.3",
-    "minimist": "0.0.8"
-  },
-  "devDependencies": {
-    "tap": "^0.4.9"
+    "async": "^0.9.0"
   }
 }
