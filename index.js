@@ -18,7 +18,7 @@ daemon({
   var massage = masseur(url, options);
 
   return function(source) {
-    return source.pipe(massage);
+    return source.through(massage);
   };
 });
 
