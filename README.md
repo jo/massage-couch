@@ -1,4 +1,4 @@
-# massage-couch
+# Massage Couch
 Take a break and let me massage your CouchDB documents.  
 I am a streaming [os_daemon](http://docs.couchdb.org/en/latest/config/externals.html#os_daemons) under the control of your couch.  
 
@@ -8,7 +8,7 @@ npm install massage-couch -g
 ```
 
 ## Commandline Client
-You can run massage-couch from the commandline:
+You can run Massage Couch from the commandline:
 ```shell
 massage-couch
 ```
@@ -21,14 +21,14 @@ massage-couch --username bernd --password secure --whitelist projects
 ```
 
 ## Daemon Configuration
-Add massage-couch to the `os_daemons` config section (eg. in local.ini):
+Add Massage Couch to the `os_daemons` config section (eg. in local.ini):
 
 ```ini
 [os_daemons]
 massage-couch = massage-couch
 ```
 
-Now CouchDB takes care of the massage-couch process.
+Now CouchDB takes care of the Massage Couch process.
 
 ```ini
 [massage-couch]
@@ -45,7 +45,7 @@ blacklist = /^_/
 
 ## Massage Definition
 Add a `massage-couch` property to a design document.
-massage-couch will process all databases which have a design document with such
+Massage Couch will process all databases which have a design document with such
 property.
 
 ```json

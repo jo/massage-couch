@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* massage-couch: Massage CouchDB documents with an os daemon worker.
+/* Massage Couch: Massage CouchDB documents with an os daemon worker.
  *
  * (c) 2014 Johannes J. Schmidt, null2 GmbH, Berlin 
  */
