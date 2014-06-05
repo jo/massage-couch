@@ -35,10 +35,12 @@ Now CouchDB takes care of the massage-couch process.
 ; Optional username and password, used by the workers to access the database
 username = mein-user
 password = secure
-; Only documents in the databases above are processed (seperate with comma)
-; whitelist = mydb,otherdb
-; Ignore the following databases (again comma seperated list)
-blacklist = _users,_replicator
+; Only documents in the databases below are processed (separate with comma).
+; Regular expressions are allowed:
+;whitelist = mydb,otherdb,/^special-.*/
+; Ignore the following databases (again comma separated list)
+; Regular expressions are again allowed:
+blacklist = /^_/
 ```
 
 ## Massage Definition
