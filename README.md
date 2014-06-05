@@ -1,6 +1,6 @@
 # Massage Couch
 Take a break and let me massage your CouchDB documents.  
-I am a streaming [os_daemon](http://docs.couchdb.org/en/latest/config/externals.html#os_daemons) under the control of your couch.  
+I am a streaming [couch-daemon](https://github.com/jo/couch-daemon) under the control of your couch.  
 
 ## Installation
 ```shell
